@@ -12,8 +12,6 @@
 
 
 //selectors
-const badform = document.querySelector('bad');
-const goodform = document.querySelector('good');
 const button = document.querySelector('button');
 const badList = document.querySelector('badList');
 const goodList = document.querySelector('goodList');
@@ -31,19 +29,6 @@ platforms = ["video streaming", "ride sharing", "photo sharing", "dating",
 
 //ex: video streaming for zoomers   lvl:1
 //ex: video streaming for zoomers who have pets?
-
-//Side Effects / lifecycle
-const existingBadIdeas = JSON.parse(localStorage.getItem('badList')) || [];
-const existingGoodIdeas = JSON.parse(localStorage.getItem('goodList')) || [];
-
-existingBadIdeas.forEach(badList => {
-    addBadList(badList)
-});
-
-existingGoodIdeas.forEach(goodList => {
-    addGoodList(goodList)
-});
-
 
 
 //lists of stuff
@@ -79,8 +64,6 @@ genApp = () =>{
 addBad = () => {
     badIdeas.push(currentIdea);
     console.log("Bad ideas:" + badIdeas);
-    //needs dom to reflect change
-    addBadList(currentIdea);
 }
 
 addGood = () => {
@@ -88,21 +71,3 @@ addGood = () => {
     console.log("Good ideas:" + goodIdeas);
 }
 
-function addBadList(text) {
-    // todoData.push(todoText);
-    // const li = document.createElement('li');
-    // li.innerHTML = todoText;
-    // todoList.appendChild(li);
-    // localStorage.setItem('todos', JSON.stringify(todoData));
-    badIdeas.push(text); 
-    const li = document.createElement('li');
-    li.innerHTML = text;
-    badIdeas.appendChild(li);
-    // localStorage.setItem('todos', JSON.stringify(todoData));
-} 
-
-//Events
-badform.onsubmit = (event) => {
-    event.preventDefault();
-    addBad(currentIdea);
-};
