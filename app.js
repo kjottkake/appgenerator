@@ -11,6 +11,11 @@
 //https://www.bls.gov/ooh/most-new-jobs.htm occupational outlook handbook
 
 
+//selectors
+const button = document.querySelector('button');
+const badList = document.querySelector('badList');
+const goodList = document.querySelector('goodList');
+
 demographics = ["zoomers", "milenials", "boomers", "college students", 
 "developers", "military personnel", "tourists", "expats", "dogs", "cats", 
 "norwegians", "asians", "americans", "chefs", "fast food workers", "cashiers",
@@ -20,11 +25,12 @@ demographics = ["zoomers", "milenials", "boomers", "college students",
 platforms = ["video streaming", "ride sharing", "photo sharing", "dating", 
 "short videos", "social media", "email", "streaming", "house sharing", "app generator", 
 "watch apps", "watch faces", "art & design", "augmented reality", "comics", "health & fitness", 
-"legal advice", "photo filters", "education", "food app"]
+"legal advice", "photo filters", "education", "food app", "SEO", "fintech", "edutech", "medtech"]
 
 //ex: video streaming for zoomers   lvl:1
 //ex: video streaming for zoomers who have pets?
 
+//lists of stuff
 badIdeas = [];
 goodIdeas = [];
 
@@ -64,6 +70,12 @@ addBad = () => {
 
     badIdeas.push(currentIdea);
     console.log("Bad ideas:" + badIdeas);
+
+    //creates li element
+    const li = document.createElement('li');
+    li.innerHTML = currentIdea;
+    badList.appendChild(li);
+    localStorage.setItem('todos', JSON.stringify(badIdeas));
 }
 
 addGood = () => {
