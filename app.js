@@ -16,6 +16,11 @@ const button = document.querySelector('button');
 const badList = document.querySelector('badList');
 const goodList = document.querySelector('goodList');
 
+
+//Side Effects / lifecycle
+const existingBadTodos = JSON.parse(localStorage.getItem('badList')) || [];
+const existingGoodTodos = JSON.parse(localStorage.getItem('goodList')) || [];
+
 demographics = ["zoomers", "milenials", "boomers", "college students", 
 "developers", "military personnel", "tourists", "expats", "dogs", "cats", 
 "norwegians", "asians", "americans", "chefs", "fast food workers", "cashiers",
@@ -64,6 +69,10 @@ genApp = () =>{
 addBad = () => {
     badIdeas.push(currentIdea);
     console.log("Bad ideas:" + badIdeas);
+    const li = document.createElement('li');
+    li.innerHTML = currentIdea;
+    badList.appendChild(li); //wtf why doesn't it work.
+    localStorage.setItem('badList', JSON.stringify(badIdeas))
 }
 
 addGood = () => {
