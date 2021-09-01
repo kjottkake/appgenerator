@@ -12,6 +12,8 @@
 
 
 //selectors
+const badform = document.querySelector('bad');
+const goodform = document.querySelector('good');
 const button = document.querySelector('button');
 const badList = document.querySelector('badList');
 const goodList = document.querySelector('goodList');
@@ -30,16 +32,32 @@ platforms = ["video streaming", "ride sharing", "photo sharing", "dating",
 //ex: video streaming for zoomers   lvl:1
 //ex: video streaming for zoomers who have pets?
 
+//Side Effects / lifecycle
+const existingBadIdeas = JSON.parse(localStorage.getItem('badList')) || [];
+const existingGoodIdeas = JSON.parse(localStorage.getItem('goodList')) || [];
+
+existingBadIdeas.forEach(badList => {
+    addBadList(badList)
+});
+
+existingGoodIdeas.forEach(goodList => {
+    addGoodList(goodList)
+});
+
+
+
 //lists of stuff
 badIdeas = [];
 goodIdeas = [];
 
 let currentIdea = "";
 
+//gets size of list
 listSize = (n) => {
     return n.length;
 }
 
+//testing
 console.log("Demographics size: " + listSize(demographics)) //testing output of size
 console.log("Platforms size: " + listSize(platforms))
 
@@ -47,38 +65,44 @@ getAppIdea = (d, p) => {
     let generatedApp = "";
     generatedDemographics = Math.floor(Math.random() * listSize(d));
     generatedPlatform = Math.floor(Math.random() * listSize(p));
-    
-    // console.log("random platform:"+ generatedPlatform);
-    // console.log("random demographics" + generatedDemographics);
     generatedApp = platforms[generatedPlatform] + " for " + demographics[generatedDemographics];
 
     return generatedApp;
 }
 
 genApp = () =>{
-    // console.log(getAppIdea(demographics, platforms));
     currentIdea = getAppIdea(demographics, platforms)
     document.getElementById("app").innerHTML = currentIdea;
 }
 
 
 addBad = () => {
-    var node = document.createElement("TR");
-    var textnode = document.createTextNode("Water");
-    node.appendChild(textnode);
-    document.getElementById("badTAble").appendChild(node);
-
     badIdeas.push(currentIdea);
     console.log("Bad ideas:" + badIdeas);
-
-    //creates li element
-    const li = document.createElement('li');
-    li.innerHTML = currentIdea;
-    badList.appendChild(li);
-    localStorage.setItem('todos', JSON.stringify(badIdeas));
+    //needs dom to reflect change
+    addBadList(currentIdea);
 }
 
 addGood = () => {
     goodIdeas.push(currentIdea);
     console.log("Good ideas:" + goodIdeas);
 }
+
+function addBadList(text) {
+    // todoData.push(todoText);
+    // const li = document.createElement('li');
+    // li.innerHTML = todoText;
+    // todoList.appendChild(li);
+    // localStorage.setItem('todos', JSON.stringify(todoData));
+    badIdeas.push(text); 
+    const li = document.createElement('li');
+    li.innerHTML = text;
+    badIdeas.appendChild(li);
+    // localStorage.setItem('todos', JSON.stringify(todoData));
+} 
+
+//Events
+badform.onsubmit = (event) => {
+    event.preventDefault();
+    addBad(currentIdea);
+};
